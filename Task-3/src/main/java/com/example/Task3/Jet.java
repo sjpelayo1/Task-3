@@ -1,11 +1,14 @@
 package com.example.Task3;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Jet extends Aircraft {
     private int numEngines;
     private int numWings;
 
-    public Jet(String name, int numEngines, int numWings, int id) {
-        super(name, id);
+    public Jet(String name, int numEngines, int numWings) {
+        super(name);
         this.numEngines = numEngines;
         this.numWings = numWings;
 
