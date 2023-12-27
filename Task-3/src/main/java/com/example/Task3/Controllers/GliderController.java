@@ -1,12 +1,12 @@
-package com.example.taskThree.Controllers;
+package com.example.Task3.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.taskThree.GliderService;
+import com.example.Task3.GliderService;
 import jakarta.validation.Valid;
-import com.example.taskThree.Glider;
+import com.example.Task3.Glider;
 import java.util.List;
 
 @RestController
