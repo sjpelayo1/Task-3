@@ -1,12 +1,12 @@
-package com.example.taskThree.Controllers;
+package com.example.Task3.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.taskThree.JetService;
+import com.example.Task3.JetService;
 import jakarta.validation.Valid;
-import com.example.taskThree.Jet;
+import com.example.Task3.Jet;
 import java.util.List;
 
 @RestController
