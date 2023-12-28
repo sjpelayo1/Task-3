@@ -4,21 +4,25 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.TableGenerator;
 
-@Entity
+@MappedSuperclass
 public abstract class Aircraft {
     @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "AircraftGen")
-    @TableGenerator(name = "AircraftGen", table = "AircraftTable", pkColumnName = "AircraftIdName", valueColumnName = "AircraftIdValue", pkColumnValue = "AircraftIdGen", initialValue = 1, allocationSize = 50)
+    @TableGenerator(name = "AircraftGen", table = "AircraftTable", pkColumnName = "AircraftIdName", valueColumnName = "AircraftIdValue", pkColumnValue = "AircraftIdGen", initialValue = 0, allocationSize = 50)
+    Integer id;
 
-    protected String name;
-    protected int id;
+    String name;
 
     protected Aircraft(String name) {
         this.name = name;
+
+    }
+
+    protected Aircraft() {
 
     }
 
@@ -30,11 +34,11 @@ public abstract class Aircraft {
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

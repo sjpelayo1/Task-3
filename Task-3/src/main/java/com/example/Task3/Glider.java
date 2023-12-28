@@ -12,6 +12,10 @@ public class Glider extends Aircraft {
         this.numWings = numWings;
     }
 
+    public Glider() {
+
+    }
+
     public int getNumWings() {
         return numWings;
     }
@@ -20,8 +24,4 @@ public class Glider extends Aircraft {
         this.numWings = numWings;
     }
 
-    @Override
-    public String toString() {
-        return "Glider Name: " + name + ", Number of Wings: " + numWings + "ID: " + id;
-    }
 }
