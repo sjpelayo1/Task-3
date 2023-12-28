@@ -5,8 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.Task3.HelicopterService;
-import jakarta.validation.Valid;
 import com.example.Task3.Helicopter;
+
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -17,12 +19,18 @@ public class HelicopterController {
     private HelicopterService helicopterService;
 
     @GetMapping
-    public List<Helicopter> getAllHelicopters() {
-        return helicopterService.getAllHelicopters();
+    public ResponseEntity<Object> getAllHelicopters() {
+        try {
+            List<Helicopter>helicopters = helicopterService.getAllHelicopters();
+            return ResponseEntity.status(HttpStatus.OK).body(helicopters);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getHelicopter(@PathVariable int id) {
+    public ResponseEntity<Object> getHelicopter(@PathVariable Integer id) {
         Helicopter helicopter = helicopterService.getHelicopterById(id);
 
         if (helicopter != null) {
@@ -35,17 +43,16 @@ public class HelicopterController {
     @PostMapping
     public ResponseEntity<Object> addHelicopter(@Valid @RequestBody Helicopter helicopter) {
         helicopterService.addHelicopter(helicopter);
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
-
+        return ResponseEntity.status(HttpStatus.CREATED).body(helicopter);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateHelicopter(@PathVariable int id,
-            @Valid @RequestBody Helicopter updatedHelicopter) {
+    public ResponseEntity<Object> updateHelicopter(@PathVariable Integer id, @Valid @RequestBody Helicopter updatedHelicopter) {
         boolean foundUpdated = helicopterService.updateHelicopter(id, updatedHelicopter);
         if (foundUpdated) {
             Helicopter updatedIdHelicopter = helicopterService.getHelicopterById(id);
             return ResponseEntity.status(HttpStatus.OK).body(updatedIdHelicopter);
+
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
@@ -53,10 +60,11 @@ public class HelicopterController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteHelicopter(@PathVariable int id) {
+    public ResponseEntity<Object> deleteHelicopter(@PathVariable Integer id) {
         boolean foundDeleted = helicopterService.deleteHelicopter(id);
         if (foundDeleted) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

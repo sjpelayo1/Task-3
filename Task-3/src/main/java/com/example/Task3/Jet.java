@@ -14,6 +14,10 @@ public class Jet extends Aircraft {
 
     }
 
+    public Jet(){
+        
+    }
+
     public int getNumEngines() {
         return numEngines;
     }
@@ -30,11 +34,4 @@ public class Jet extends Aircraft {
         this.numWings = numWings;
     }
 
-    @Override
-    public String toString() {
-        return "Jet Name: " + name +
-                ", Number of Engines: " + numEngines +
-                ", Number of Wings: " + numWings +
-                ", ID" + id;
-    }
 }
