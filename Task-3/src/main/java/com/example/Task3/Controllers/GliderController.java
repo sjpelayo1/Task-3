@@ -17,12 +17,18 @@ public class GliderController {
     private GliderService gliderService;
 
     @GetMapping
-    public List<Glider> getAllGliders() {
-        return gliderService.getAllGliders();
+    public ResponseEntity<Object> getAllGliders() {
+        try {
+            List<Glider> gliders = gliderService.getAllGliders();
+            return ResponseEntity.status(HttpStatus.OK).body(gliders);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getGlider(@PathVariable int id) {
+    public ResponseEntity<Object> getGlider(@PathVariable Integer id) {
         Glider glider = gliderService.getGliderById(id);
 
         if (glider != null) {
@@ -39,7 +45,7 @@ public class GliderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateGlider(@PathVariable int id, @Valid @RequestBody Glider updatedGlider) {
+    public ResponseEntity<Object> updateGlider(@PathVariable Integer id, @Valid @RequestBody Glider updatedGlider) {
         boolean foundUpdated = gliderService.updateGlider(id, updatedGlider);
         if (foundUpdated) {
             Glider updatedIdGlider = gliderService.getGliderById(id);
@@ -52,7 +58,7 @@ public class GliderController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteGlider(@PathVariable int id) {
+    public ResponseEntity<Object> deleteGlider(@PathVariable Integer id) {
         boolean foundDeleted = gliderService.deleteGlider(id);
         if (foundDeleted) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
@@ -62,4 +68,3 @@ public class GliderController {
         }
     }
 }
-
