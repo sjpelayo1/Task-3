@@ -1,54 +1,67 @@
 package com.example.Task3;
 
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+import com.example.Task3.Repositories.HelicopterRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @Service
 public class HelicopterService {
 
-    private List<Helicopter> helicopters = new ArrayList<>();
-    private int counter = 1;
+    private final HelicopterRepository helicopterRepository;
 
-    public List<Helicopter> getAllHelicopters() {
-        return helicopters;
+    @Autowired
+    public HelicopterService(HelicopterRepository helicopterRepository) {
+        this.helicopterRepository = helicopterRepository;
     }
 
-    public Helicopter getHelicopterById(int id) {
-        return helicopters.stream()
-                .filter(helicopter -> helicopter.getId() == id)
-                .findFirst()
-                .orElse(null);
+    public List<Helicopter> getAllHelicopters() {
+        try {
+            return helicopterRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public Helicopter getHelicopterById(Integer id) {
+        return helicopterRepository.findById(id).orElse(null);
     }
 
     public void addHelicopter(Helicopter helicopter) {
-        helicopter.setId(counter);
-        helicopters.add(helicopter);
-        counter++;
-    }
-
-    public boolean updateHelicopter(int id, Helicopter updatedHelicopter) {
-        Helicopter existingHelicopter = getHelicopterById(id);
-        if (existingHelicopter != null) {
-            existingHelicopter.setNumBlades(updatedHelicopter.getNumBlades());
-            existingHelicopter.setNumEngines(updatedHelicopter.getNumEngines());
-            existingHelicopter.setName(updatedHelicopter.getName());
-
-            return true;
-        } else {
-            return false;
-
+        try {
+            helicopterRepository.save(helicopter);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
-    public boolean deleteHelicopter(int id) {
-        Helicopter helicopterToRemove = getHelicopterById(id);
-        if (helicopterToRemove != null) {
-            helicopters.remove(helicopterToRemove);
-            return true;
-        } else {
+    public boolean updateHelicopter(Integer id, Helicopter updatedHelicopter) {
+        try {
+            if (helicopterRepository.existsById(id)) {
+                updatedHelicopter.setId(id);
+                helicopterRepository.save(updatedHelicopter);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
 
+    }
+
+    public boolean deleteHelicopter(Integer id) {
+        try {
+            if (helicopterRepository.existsById(id)) {
+                helicopterRepository.deleteById(id);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

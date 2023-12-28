@@ -14,6 +14,10 @@ public class Helicopter extends Aircraft {
         this.numBlades = numBlades;
     }
 
+    public Helicopter(){
+
+    }
+
     public int getNumEngines() {
         return numEngines;
     }
@@ -30,12 +34,5 @@ public class Helicopter extends Aircraft {
         this.numBlades = numBlades;
     }
 
-    @Override
-    public String toString() {
-        return "Helicopter Name: " + name +
-                ", Number of Engines: " + numEngines +
-                ", Number of Blades: " + numBlades +
-                "ID: " + id;
-    }
 
 }
