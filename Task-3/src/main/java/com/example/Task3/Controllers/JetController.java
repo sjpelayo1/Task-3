@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.Task3.JetService;
+
+import com.example.Task3.Models.Glider;
+import com.example.Task3.Models.Jet;
+import com.example.Task3.Services.JetService;
+
 import jakarta.validation.Valid;
 
-import com.example.Task3.Jet;
 import java.util.List;
 
 @RestController
@@ -19,13 +22,16 @@ public class JetController {
 
     @GetMapping
     public ResponseEntity<Object> getAllJets() {
-        try {
-            List<Jet> jets = jetService.getAllJets();
-            return ResponseEntity.status(HttpStatus.OK).body(jets);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        List<Jet> jets = jetService.getAllJets();
+            if(jets.size() != 0) {
+                return ResponseEntity.status(HttpStatus.OK).body(jets);
+            }
+            else if(jets.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(jets);
+            }
+            else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jets);
+            }
     }
 
     @GetMapping("/{id}")
