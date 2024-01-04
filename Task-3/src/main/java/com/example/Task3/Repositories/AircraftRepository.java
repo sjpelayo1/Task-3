@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.example.Task3.Models.Aircraft;
 
 @Repository
-public interface AircraftRepository extends JpaRepository<Aircraft, Long> {
+public interface AircraftRepository extends JpaRepository<Aircraft, Integer> {
     // Define custom query methods here if needed
 }
