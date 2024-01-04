@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.Task3.HelicopterService;
-import com.example.Task3.Helicopter;
+
+import com.example.Task3.Models.Helicopter;
+import com.example.Task3.Services.HelicopterService;
 
 import jakarta.validation.Valid;
 
@@ -20,13 +21,16 @@ public class HelicopterController {
 
     @GetMapping
     public ResponseEntity<Object> getAllHelicopters() {
-        try {
-            List<Helicopter>helicopters = helicopterService.getAllHelicopters();
-            return ResponseEntity.status(HttpStatus.OK).body(helicopters);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        List<Helicopter> helicopters = helicopterService.getAllHelicopters();
+            if(helicopters.size() != 0) {
+                return ResponseEntity.status(HttpStatus.OK).body(helicopters);
+            }
+            else if(helicopters.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(helicopters);
+            }
+            else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(helicopters);
+            }
     }
 
     @GetMapping("/{id}")
@@ -36,7 +40,7 @@ public class HelicopterController {
         if (helicopter != null) {
             return ResponseEntity.status(HttpStatus.OK).body(helicopter);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(helicopter);
         }
     }
 

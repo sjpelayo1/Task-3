@@ -1,4 +1,4 @@
-package com.example.Task3;
+package com.example.Task3.Models;
 
 import jakarta.persistence.Entity;
 
@@ -14,8 +14,8 @@ public class Jet extends Aircraft {
 
     }
 
-    public Jet(){
-        
+    public Jet() {
+
     }
 
     public int getNumEngines() {

@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.Task3.GliderService;
+
+import com.example.Task3.Models.Glider;
+import com.example.Task3.Services.GliderService;
+
 import jakarta.validation.Valid;
-import com.example.Task3.Glider;
+
 import java.util.List;
 
 @RestController
@@ -18,14 +21,16 @@ public class GliderController {
 
     @GetMapping
     public ResponseEntity<Object> getAllGliders() {
-        try {
-            List<Glider> gliders = gliderService.getAllGliders();
-            return ResponseEntity.status(HttpStatus.OK).body(gliders);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+         List<Glider> gliders = gliderService.getAllGliders();
+            if(gliders.size() != 0) {
+                return ResponseEntity.status(HttpStatus.OK).body(gliders);
+            } else if(gliders.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(gliders);
+            }else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(gliders);
+            }
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getGlider(@PathVariable Integer id) {
@@ -34,14 +39,20 @@ public class GliderController {
         if (glider != null) {
             return ResponseEntity.status(HttpStatus.OK).body(glider);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(glider);
         }
     }
 
     @PostMapping
     public ResponseEntity<Object> addGlider(@Valid @RequestBody Glider glider) {
         gliderService.addGlider(glider);
-        return ResponseEntity.status(HttpStatus.CREATED).body(glider);
+        if(glider != null) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(glider);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(glider);
+
+        }
+
     }
 
     @PutMapping("/{id}")
@@ -52,7 +63,7 @@ public class GliderController {
             return ResponseEntity.status(HttpStatus.OK).body(updatedIdGlider);
 
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
 
     }

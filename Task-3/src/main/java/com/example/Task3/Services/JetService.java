@@ -1,7 +1,8 @@
-package com.example.Task3;
+package com.example.Task3.Services;
 
 import org.springframework.stereotype.Service;
 
+import com.example.Task3.Models.Jet;
 import com.example.Task3.Repositories.JetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;

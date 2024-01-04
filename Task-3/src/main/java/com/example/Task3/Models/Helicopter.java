@@ -1,4 +1,4 @@
-package com.example.Task3;
+package com.example.Task3.Models;
 
 import jakarta.persistence.Entity;
 
@@ -14,7 +14,7 @@ public class Helicopter extends Aircraft {
         this.numBlades = numBlades;
     }
 
-    public Helicopter(){
+    public Helicopter() {
 
     }
 
@@ -33,6 +33,5 @@ public class Helicopter extends Aircraft {
     public void setNumBlades(int numBlades) {
         this.numBlades = numBlades;
     }
-
 
 }

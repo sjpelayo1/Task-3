@@ -1,8 +1,10 @@
-package com.example.Task3;
+package com.example.Task3.Models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 public class Glider extends Aircraft {
 
     private int numWings;
