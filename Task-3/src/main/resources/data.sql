@@ -1,4 +1,5 @@
-INSERT INTO glider (name, num_wings) VALUES ('GliderOne', 2);
-INSERT INTO glider (name, num_wings) VALUES ('GliderTwo', 2);
-INSERT INTO glider (name, num_wings) VALUES ('GliderThree', 2);
-INSERT INTO glider (name, num_wings) VALUES ('GliderFour', 2);
+CREATE SEQUENCE aircraft_sequence START WITH 1;
+
+INSERT INTO Aircraft (id, name) VALUES (NEXT VALUE FOR aircraft_sequence, 'GliderOne');
+
+INSERT INTO Glider (id, NUM_WINGS) VALUES (CURRVAL('aircraft_sequence') , 2);

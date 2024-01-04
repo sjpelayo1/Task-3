@@ -1,8 +1,10 @@
 package com.example.Task3.Models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 public class Helicopter extends Aircraft {
 
     private int numEngines;
@@ -14,7 +16,7 @@ public class Helicopter extends Aircraft {
         this.numBlades = numBlades;
     }
 
-    public Helicopter(){
+    public Helicopter() {
 
     }
 
@@ -33,6 +35,5 @@ public class Helicopter extends Aircraft {
     public void setNumBlades(int numBlades) {
         this.numBlades = numBlades;
     }
-
 
 }
