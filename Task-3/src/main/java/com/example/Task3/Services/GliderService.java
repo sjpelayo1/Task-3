@@ -34,7 +34,7 @@ public class GliderService {
         try {
             gliderRepository.save(glider);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
     }
