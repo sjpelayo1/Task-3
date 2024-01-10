@@ -6,11 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.TableGenerator;
 
 @Entity
+
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Aircraft {
+    @TableGenerator(name = "Aircraft_Gen", table = "ID_GEN_TABLE", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", pkColumnValue = "Aircraft_Gen", initialValue = 100, allocationSize = 100)
     @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

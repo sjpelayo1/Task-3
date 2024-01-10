@@ -55,7 +55,7 @@ public class GliderController {
 
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Object> updateGlider(@PathVariable Integer id, @Valid @RequestBody Glider updatedGlider) {
         boolean foundUpdated = gliderService.updateGlider(id, updatedGlider);
         if (foundUpdated) {
@@ -63,7 +63,7 @@ public class GliderController {
             return ResponseEntity.status(HttpStatus.OK).body(updatedIdGlider);
 
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
     }
