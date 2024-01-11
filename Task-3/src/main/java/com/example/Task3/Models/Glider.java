@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class Glider extends Aircraft {
-    
+
     private int numWings;
 
     public Glider(String name, int numWings) {

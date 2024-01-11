@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.example.Task3.Models.Glider;
 import com.example.Task3.Repositories.GliderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GliderService {
@@ -21,48 +21,55 @@ public class GliderService {
         try {
             return gliderRepository.findAll();
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         }
     }
 
-    public Glider getGliderById(Integer id) {
-        return gliderRepository.findById(id).orElse(null);
+    public Glider getGliderById(Integer ID) {
+        return gliderRepository.findById(ID).orElse(null);
     }
 
     public void addGlider(Glider glider) {
         try {
+            System.out.println("Glider object before saving: " + glider.toString());
             gliderRepository.save(glider);
         } catch (Exception e) {
-            //e.printStackTrace();
         }
 
     }
 
-    public boolean updateGlider(Integer id, Glider updatedGlider) {
+    public boolean updateGlider(Integer ID, Glider updatedGlider) {
         try {
-            if (gliderRepository.existsById(id)) {
-                updatedGlider.setId(id);
-                gliderRepository.save(updatedGlider);
+            Optional<Glider> existingGliderOptional = gliderRepository.findById(ID);
+
+            if (existingGliderOptional.isPresent()) {
+                Glider existingGlider = existingGliderOptional.get();
+
+                if (updatedGlider.getName() != null) {
+                    existingGlider.setName(updatedGlider.getName());
+                }
+
+                if (updatedGlider.getNumWings() != 0) {
+                    existingGlider.setNumWings(updatedGlider.getNumWings());
+                }
+
+                gliderRepository.save(existingGlider);
                 return true;
             }
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
-
     }
 
-    public boolean deleteGlider(Integer id) {
+    public boolean deleteGlider(Integer ID) {
         try {
-            if (gliderRepository.existsById(id)) {
-                gliderRepository.deleteById(id);
+            if (gliderRepository.existsById(ID)) {
+                gliderRepository.deleteById(ID);
                 return true;
             }
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
