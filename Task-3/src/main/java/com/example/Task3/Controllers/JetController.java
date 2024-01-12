@@ -57,7 +57,7 @@ public class JetController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteJet(@PathVariable Integer id) {
+    public ResponseEntity<Object> deleteJet(@PathVariable Integer ID) {
         boolean foundDeleted = jetService.deleteJet(ID);
         if (foundDeleted) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
