@@ -1,14 +1,17 @@
 package com.example.Task3.Models;
 
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Helicopter extends Aircraft {
 
+    @NotNull
     private int numEngines;
+    @NotNull
     private int numBlades;
 
-    public Helicopter(String name, int numEngines, int numBlades) {
+    public Helicopter(@NotNull String name, @NotNull int numEngines, @NotNull int numBlades) {
         super(name);
         this.numEngines = numEngines;
         this.numBlades = numBlades;
