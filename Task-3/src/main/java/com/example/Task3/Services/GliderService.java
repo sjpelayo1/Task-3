@@ -4,6 +4,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.Task3.Models.Glider;
 import com.example.Task3.Repositories.GliderRepository;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.*;
 
@@ -18,27 +21,22 @@ public class GliderService {
     }
 
     public List<Glider> getAllGliders() {
-        try {
-            return gliderRepository.findAll();
-        } catch (Exception e) {
-            throw e;
-        }
+        return gliderRepository.findAll();
     }
 
     public Glider getGliderById(Integer ID) {
         return gliderRepository.findById(ID).orElse(null);
     }
 
-    public void addGlider(Glider glider) {
+    public void addGlider(@Valid Glider glider) {
         try {
-            System.out.println("Glider object before saving: " + glider.toString());
             gliderRepository.save(glider);
         } catch (Exception e) {
         }
 
     }
 
-    public boolean updateGlider(Integer ID, Glider updatedGlider) {
+    public boolean updateGlider(@Valid Integer ID, Glider updatedGlider) {
         try {
             Optional<Glider> existingGliderOptional = gliderRepository.findById(ID);
 

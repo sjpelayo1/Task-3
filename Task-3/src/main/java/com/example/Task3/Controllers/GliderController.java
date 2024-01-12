@@ -2,6 +2,7 @@ package com.example.Task3.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,45 +22,36 @@ public class GliderController {
 
     @GetMapping
     public ResponseEntity<Object> getAllGliders() {
-         List<Glider> gliders = gliderService.getAllGliders();
-            if(gliders.size() != 0) {
-                return ResponseEntity.status(HttpStatus.OK).body(gliders);
-            } else if(gliders.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(gliders);
-            }else{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(gliders);
-            }
+        List<Glider> gliders = gliderService.getAllGliders();
+        return ResponseEntity.status(HttpStatus.OK).body(gliders);
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getGlider(@PathVariable Integer id) {
-        Glider glider = gliderService.getGliderById(id);
+    public ResponseEntity<Object> getGlider(@PathVariable Integer ID) {
+        Glider glider = gliderService.getGliderById(ID);
 
         if (glider != null) {
             return ResponseEntity.status(HttpStatus.OK).body(glider);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(glider);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
     @PostMapping
     public ResponseEntity<Object> addGlider(@Valid @RequestBody Glider glider) {
-        gliderService.addGlider(glider);
-        if(glider != null) {
+        try {
+            gliderService.addGlider(glider);
             return ResponseEntity.status(HttpStatus.CREATED).body(glider);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(glider);
-
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Validation errors");
         }
-
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Object> updateGlider(@PathVariable Integer id, @Valid @RequestBody Glider updatedGlider) {
-        boolean foundUpdated = gliderService.updateGlider(id, updatedGlider);
+    public ResponseEntity<Object> updateGlider(@PathVariable Integer ID, @Valid @RequestBody Glider updatedGlider) {
+        boolean foundUpdated = gliderService.updateGlider(ID, updatedGlider);
         if (foundUpdated) {
-            Glider updatedIdGlider = gliderService.getGliderById(id);
+            Glider updatedIdGlider = gliderService.getGliderById(ID);
             return ResponseEntity.status(HttpStatus.OK).body(updatedIdGlider);
 
         } else {
@@ -69,8 +61,8 @@ public class GliderController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteGlider(@PathVariable Integer id) {
-        boolean foundDeleted = gliderService.deleteGlider(id);
+    public ResponseEntity<Object> deleteGlider(@PathVariable Integer ID) {
+        boolean foundDeleted = gliderService.deleteGlider(ID);
         if (foundDeleted) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 

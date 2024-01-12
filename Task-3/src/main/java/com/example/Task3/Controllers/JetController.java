@@ -2,10 +2,10 @@ package com.example.Task3.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.Task3.Models.Glider;
 import com.example.Task3.Models.Jet;
 import com.example.Task3.Services.JetService;
 
@@ -23,20 +23,12 @@ public class JetController {
     @GetMapping
     public ResponseEntity<Object> getAllJets() {
         List<Jet> jets = jetService.getAllJets();
-            if(jets.size() != 0) {
-                return ResponseEntity.status(HttpStatus.OK).body(jets);
-            }
-            else if(jets.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(jets);
-            }
-            else{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jets);
-            }
+        return ResponseEntity.status(HttpStatus.OK).body(jets);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getJet(@PathVariable Integer id) {
-        Jet jet = jetService.getJetById(id);
+    public ResponseEntity<Object> getJet(@PathVariable Integer ID) {
+        Jet jet = jetService.getJetById(ID);
 
         if (jet != null) {
             return ResponseEntity.status(HttpStatus.OK).body(jet);
@@ -52,10 +44,10 @@ public class JetController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateJet(@PathVariable Integer id, @Valid @RequestBody Jet updatedJet) {
-        boolean foundUpdated = jetService.updateJet(id, updatedJet);
+    public ResponseEntity<Object> updateJet(@PathVariable Integer ID, @Valid @RequestBody Jet updatedJet) {
+        boolean foundUpdated = jetService.updateJet(ID, updatedJet);
         if (foundUpdated) {
-            Jet updatedIdJet = jetService.getJetById(id);
+            Jet updatedIdJet = jetService.getJetById(ID);
             return ResponseEntity.status(HttpStatus.OK).body(updatedIdJet);
 
         } else {
@@ -66,7 +58,7 @@ public class JetController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteJet(@PathVariable Integer id) {
-        boolean foundDeleted = jetService.deleteJet(id);
+        boolean foundDeleted = jetService.deleteJet(ID);
         if (foundDeleted) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 
@@ -75,4 +67,3 @@ public class JetController {
         }
     }
 }
-

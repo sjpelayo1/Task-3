@@ -6,6 +6,9 @@ import com.example.Task3.Models.Helicopter;
 import com.example.Task3.Repositories.HelicopterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import java.util.Optional;
+
+import jakarta.validation.Valid;
 
 @Service
 public class HelicopterService {
@@ -18,51 +21,58 @@ public class HelicopterService {
     }
 
     public List<Helicopter> getAllHelicopters() {
-        try {
-            return helicopterRepository.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
+        return helicopterRepository.findAll();
+
     }
 
-    public Helicopter getHelicopterById(Integer id) {
-        return helicopterRepository.findById(id).orElse(null);
+    public Helicopter getHelicopterById(Integer ID) {
+        return helicopterRepository.findById(ID).orElse(null);
     }
 
     public void addHelicopter(Helicopter helicopter) {
         try {
             helicopterRepository.save(helicopter);
         } catch (Exception e) {
-            e.printStackTrace();
         }
 
     }
 
-    public boolean updateHelicopter(Integer id, Helicopter updatedHelicopter) {
+    public boolean updateHelicopter(@Valid Integer ID, Helicopter updatedHelicopter) {
         try {
-            if (helicopterRepository.existsById(id)) {
-                updatedHelicopter.setId(id);
-                helicopterRepository.save(updatedHelicopter);
+            Optional<Helicopter> existingHelicopterOptional = helicopterRepository.findById(ID);
+
+            if (existingHelicopterOptional.isPresent()) {
+                Helicopter existingHelicopter = existingHelicopterOptional.get();
+
+                if (updatedHelicopter.getName() != null) {
+                    existingHelicopter.setName(updatedHelicopter.getName());
+                }
+
+                if (updatedHelicopter.getNumBlades() != 0) {
+                    existingHelicopter.setNumBlades(updatedHelicopter.getNumBlades());
+                }
+
+                if (updatedHelicopter.getNumEngines() != 0) {
+                    existingHelicopter.setNumEngines(updatedHelicopter.getNumEngines());
+                }
+
+                helicopterRepository.save(existingHelicopter);
                 return true;
             }
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
-
     }
 
-    public boolean deleteHelicopter(Integer id) {
+    public boolean deleteHelicopter(Integer ID) {
         try {
-            if (helicopterRepository.existsById(id)) {
-                helicopterRepository.deleteById(id);
+            if (helicopterRepository.existsById(ID)) {
+                helicopterRepository.deleteById(ID);
                 return true;
             }
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }

@@ -4,8 +4,12 @@ import org.springframework.stereotype.Service;
 
 import com.example.Task3.Models.Jet;
 import com.example.Task3.Repositories.JetRepository;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JetService {
@@ -18,51 +22,58 @@ public class JetService {
     }
 
     public List<Jet> getAllJets() {
-        try {
-            return jetRepository.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
+        return jetRepository.findAll();
     }
 
-    public Jet getJetById(Integer id) {
-        return jetRepository.findById(id).orElse(null);
+    public Jet getJetById(Integer ID) {
+        return jetRepository.findById(ID).orElse(null);
     }
 
-    public void addJet(Jet jet) {
+    public void addJet(@Valid Jet jet) {
         try {
             jetRepository.save(jet);
         } catch (Exception e) {
-            e.printStackTrace();
         }
 
     }
 
-    public boolean updateJet(Integer id, Jet updatedJet) {
+    public boolean updateJet(Integer ID, Jet updatedJet) {
         try {
-            if (jetRepository.existsById(id)) {
-                updatedJet.setId(id);
-                jetRepository.save(updatedJet);
+            Optional<Jet> existingJetOptional = jetRepository.findById(ID);
+
+            if (existingJetOptional.isPresent()) {
+                Jet existingJet = existingJetOptional.get();
+
+                if (updatedJet.getName() != null) {
+                    existingJet.setName(updatedJet.getName());
+                }
+
+                if (updatedJet.getNumWings() != 0) {
+                    existingJet.setNumWings(updatedJet.getNumWings());
+                }
+
+                if (updatedJet.getNumEngines() != 0) {
+                    existingJet.setNumEngines(updatedJet.getNumEngines());
+                }
+
+                jetRepository.save(existingJet);
                 return true;
             }
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
 
     }
 
-    public boolean deleteJet(Integer id) {
+    public boolean deleteJet(Integer ID) {
         try {
-            if (jetRepository.existsById(id)) {
-                jetRepository.deleteById(id);
+            if (jetRepository.existsById(ID)) {
+                jetRepository.deleteById(ID);
                 return true;
             }
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
