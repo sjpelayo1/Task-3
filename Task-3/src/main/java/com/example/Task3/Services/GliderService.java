@@ -30,11 +30,7 @@ public class GliderService {
 
     public boolean addGlider(@Valid Glider glider) {
         try {
-            if (glider.getName() != null) {
-                if (glider.getNumWings() != null) {
-                    gliderRepository.save(glider);
-                }
-            }
+            gliderRepository.save(glider);
             return true;
         } catch (Exception e) {
             return false;
@@ -47,17 +43,10 @@ public class GliderService {
 
             if (existingGliderOptional.isPresent()) {
                 Glider existingGlider = existingGliderOptional.get();
-
-                if (updatedGlider.getName() != null) {
                     existingGlider.setName(updatedGlider.getName());
-                }
-
-                if (updatedGlider.getNumWings() != null) {
                     existingGlider.setNumWings(updatedGlider.getNumWings());
-                }
-
-                gliderRepository.save(existingGlider);
-                return true;
+                    gliderRepository.save(existingGlider);
+                    return true;
             }
             return false;
         } catch (Exception e) {
