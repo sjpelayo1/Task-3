@@ -27,7 +27,7 @@ public class HelicopterController {
 
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{ID}")
     public ResponseEntity<Object> getHelicopter(@PathVariable Integer ID) {
         Helicopter helicopter = helicopterService.getHelicopterById(ID);
 
@@ -48,7 +48,7 @@ public class HelicopterController {
         }
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{ID}")
     public ResponseEntity<Object> updateHelicopter(@PathVariable Integer ID,
             @Valid @RequestBody Helicopter updatedHelicopter) {
         boolean foundUpdated = helicopterService.updateHelicopter(ID, updatedHelicopter);
@@ -62,7 +62,7 @@ public class HelicopterController {
 
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ID}")
     public ResponseEntity<Object> deleteHelicopter(@PathVariable Integer ID) {
         boolean foundDeleted = helicopterService.deleteHelicopter(ID);
         if (foundDeleted) {

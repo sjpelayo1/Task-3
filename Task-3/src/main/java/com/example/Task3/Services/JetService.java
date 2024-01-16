@@ -29,10 +29,18 @@ public class JetService {
         return jetRepository.findById(ID).orElse(null);
     }
 
-    public void addJet(@Valid Jet jet) {
+    public boolean addJet(@Valid Jet jet) {
         try {
-            jetRepository.save(jet);
+            if (jet.getName() != null) {
+                if (jet.getNumEngines() != null) {
+                    if (jet.getNumWings() != null) {
+                        jetRepository.save(jet);
+                    }
+                }
+            }
+            return true;
         } catch (Exception e) {
+            return false;
         }
 
     }
@@ -48,11 +56,11 @@ public class JetService {
                     existingJet.setName(updatedJet.getName());
                 }
 
-                if (updatedJet.getNumWings() != 0) {
+                if (updatedJet.getNumWings() != null) {
                     existingJet.setNumWings(updatedJet.getNumWings());
                 }
 
-                if (updatedJet.getNumEngines() != 0) {
+                if (updatedJet.getNumEngines() != null) {
                     existingJet.setNumEngines(updatedJet.getNumEngines());
                 }
 

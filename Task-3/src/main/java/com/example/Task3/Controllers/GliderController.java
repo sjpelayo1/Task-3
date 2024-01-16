@@ -38,7 +38,7 @@ public class GliderController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> addGlider(@Valid @RequestBody Glider glider) {
+    public ResponseEntity<Object> addGlider(@RequestBody @Valid Glider glider) {
         try {
             gliderService.addGlider(glider);
             return ResponseEntity.status(HttpStatus.CREATED).body(glider);

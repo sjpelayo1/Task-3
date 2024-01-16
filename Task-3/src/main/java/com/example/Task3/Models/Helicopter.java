@@ -7,11 +7,11 @@ import jakarta.validation.constraints.NotNull;
 public class Helicopter extends Aircraft {
 
     @NotNull
-    private int numEngines;
+    private Integer numEngines;
     @NotNull
-    private int numBlades;
+    private Integer numBlades;
 
-    public Helicopter(@NotNull String name, @NotNull int numEngines, @NotNull int numBlades) {
+    public Helicopter(@NotNull String name, @NotNull Integer numEngines, @NotNull Integer numBlades) {
         super(name);
         this.numEngines = numEngines;
         this.numBlades = numBlades;
@@ -21,19 +21,19 @@ public class Helicopter extends Aircraft {
 
     }
 
-    public int getNumEngines() {
+    public Integer getNumEngines() {
         return numEngines;
     }
 
-    public void setNumEngines(int numEngines) {
+    public void setNumEngines(Integer numEngines) {
         this.numEngines = numEngines;
     }
 
-    public int getNumBlades() {
+    public Integer getNumBlades() {
         return numBlades;
     }
 
-    public void setNumBlades(int numBlades) {
+    public void setNumBlades(Integer numBlades) {
         this.numBlades = numBlades;
     }
 

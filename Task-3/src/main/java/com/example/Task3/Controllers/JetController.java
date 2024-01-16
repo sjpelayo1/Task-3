@@ -26,7 +26,7 @@ public class JetController {
         return ResponseEntity.status(HttpStatus.OK).body(jets);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{ID}")
     public ResponseEntity<Object> getJet(@PathVariable Integer ID) {
         Jet jet = jetService.getJetById(ID);
 
@@ -39,11 +39,15 @@ public class JetController {
 
     @PostMapping
     public ResponseEntity<Object> addJet(@Valid @RequestBody Jet jet) {
-        jetService.addJet(jet);
-        return ResponseEntity.status(HttpStatus.CREATED).body(jet);
+        try {
+            jetService.addJet(jet);
+            return ResponseEntity.status(HttpStatus.CREATED).body(jet);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Validation errors");
+        }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{ID}")
     public ResponseEntity<Object> updateJet(@PathVariable Integer ID, @Valid @RequestBody Jet updatedJet) {
         boolean foundUpdated = jetService.updateJet(ID, updatedJet);
         if (foundUpdated) {
@@ -56,7 +60,8 @@ public class JetController {
 
     }
 
-    @DeleteMapping("/{id}")
+
+    @DeleteMapping("/{ID}")
     public ResponseEntity<Object> deleteJet(@PathVariable Integer ID) {
         boolean foundDeleted = jetService.deleteJet(ID);
         if (foundDeleted) {

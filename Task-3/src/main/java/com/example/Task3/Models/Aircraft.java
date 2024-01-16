@@ -1,5 +1,6 @@
 package com.example.Task3.Models;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +19,7 @@ public abstract class Aircraft {
     protected Integer ID;
 
     @NotNull
+    @NotEmpty
     protected String name;
 
     protected Aircraft(String name) {
