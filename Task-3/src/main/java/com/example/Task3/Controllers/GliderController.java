@@ -26,7 +26,7 @@ public class GliderController {
         return ResponseEntity.status(HttpStatus.OK).body(gliders);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{ID}")
     public ResponseEntity<Object> getGlider(@PathVariable Integer ID) {
         Glider glider = gliderService.getGliderById(ID);
 
@@ -47,7 +47,7 @@ public class GliderController {
         }
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{ID}")
     public ResponseEntity<Object> updateGlider(@PathVariable Integer ID, @Valid @RequestBody Glider updatedGlider) {
         boolean foundUpdated = gliderService.updateGlider(ID, updatedGlider);
         if (foundUpdated) {
@@ -60,7 +60,7 @@ public class GliderController {
 
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ID}")
     public ResponseEntity<Object> deleteGlider(@PathVariable Integer ID) {
         boolean foundDeleted = gliderService.deleteGlider(ID);
         if (foundDeleted) {
