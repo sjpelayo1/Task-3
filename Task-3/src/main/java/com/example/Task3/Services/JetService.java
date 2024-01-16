@@ -31,13 +31,7 @@ public class JetService {
 
     public boolean addJet(@Valid Jet jet) {
         try {
-            if (jet.getName() != null) {
-                if (jet.getNumEngines() != null) {
-                    if (jet.getNumWings() != null) {
-                        jetRepository.save(jet);
-                    }
-                }
-            }
+            jetRepository.save(jet);
             return true;
         } catch (Exception e) {
             return false;
@@ -45,27 +39,17 @@ public class JetService {
 
     }
 
-    public boolean updateJet(Integer ID, Jet updatedJet) {
+    public boolean updateJet(@Valid Integer ID, Jet updatedJet) {
         try {
             Optional<Jet> existingJetOptional = jetRepository.findById(ID);
 
             if (existingJetOptional.isPresent()) {
                 Jet existingJet = existingJetOptional.get();
-
-                if (updatedJet.getName() != null) {
                     existingJet.setName(updatedJet.getName());
-                }
-
-                if (updatedJet.getNumWings() != null) {
                     existingJet.setNumWings(updatedJet.getNumWings());
-                }
-
-                if (updatedJet.getNumEngines() != null) {
                     existingJet.setNumEngines(updatedJet.getNumEngines());
-                }
-
-                jetRepository.save(existingJet);
-                return true;
+                    jetRepository.save(existingJet);
+                    return true;
             }
             return false;
         } catch (Exception e) {

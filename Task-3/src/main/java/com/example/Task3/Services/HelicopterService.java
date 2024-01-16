@@ -29,15 +29,9 @@ public class HelicopterService {
         return helicopterRepository.findById(ID).orElse(null);
     }
 
-    public boolean addHelicopter(Helicopter helicopter) {
+    public boolean addHelicopter(@Valid Helicopter helicopter) {
         try {
-            if (helicopter.getName() != null) {
-                if (helicopter.getNumEngines() != null) {
-                    if (helicopter.getNumBlades() != null) {
-                        helicopterRepository.save(helicopter);
-                    }
-                }
-            }
+            helicopterRepository.save(helicopter);
             return true;
         } catch (Exception e) {
             return false;
@@ -51,21 +45,11 @@ public class HelicopterService {
 
             if (existingHelicopterOptional.isPresent()) {
                 Helicopter existingHelicopter = existingHelicopterOptional.get();
-
-                if (updatedHelicopter.getName() != null) {
                     existingHelicopter.setName(updatedHelicopter.getName());
-                }
-
-                if (updatedHelicopter.getNumBlades() != null) {
                     existingHelicopter.setNumBlades(updatedHelicopter.getNumBlades());
-                }
-
-                if (updatedHelicopter.getNumEngines() != null) {
                     existingHelicopter.setNumEngines(updatedHelicopter.getNumEngines());
-                }
-
-                helicopterRepository.save(existingHelicopter);
-                return true;
+                    helicopterRepository.save(existingHelicopter);
+                    return true;
             }
             return false;
         } catch (Exception e) {
