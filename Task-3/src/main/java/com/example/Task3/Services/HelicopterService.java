@@ -29,10 +29,18 @@ public class HelicopterService {
         return helicopterRepository.findById(ID).orElse(null);
     }
 
-    public void addHelicopter(Helicopter helicopter) {
+    public boolean addHelicopter(Helicopter helicopter) {
         try {
-            helicopterRepository.save(helicopter);
+            if (helicopter.getName() != null) {
+                if (helicopter.getNumEngines() != null) {
+                    if (helicopter.getNumBlades() != null) {
+                        helicopterRepository.save(helicopter);
+                    }
+                }
+            }
+            return true;
         } catch (Exception e) {
+            return false;
         }
 
     }
@@ -48,11 +56,11 @@ public class HelicopterService {
                     existingHelicopter.setName(updatedHelicopter.getName());
                 }
 
-                if (updatedHelicopter.getNumBlades() != 0) {
+                if (updatedHelicopter.getNumBlades() != null) {
                     existingHelicopter.setNumBlades(updatedHelicopter.getNumBlades());
                 }
 
-                if (updatedHelicopter.getNumEngines() != 0) {
+                if (updatedHelicopter.getNumEngines() != null) {
                     existingHelicopter.setNumEngines(updatedHelicopter.getNumEngines());
                 }
 

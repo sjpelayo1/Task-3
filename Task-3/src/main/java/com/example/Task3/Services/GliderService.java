@@ -28,12 +28,17 @@ public class GliderService {
         return gliderRepository.findById(ID).orElse(null);
     }
 
-    public void addGlider(@Valid Glider glider) {
+    public boolean addGlider(@Valid Glider glider) {
         try {
-            gliderRepository.save(glider);
+            if (glider.getName() != null) {
+                if (glider.getNumWings() != null) {
+                    gliderRepository.save(glider);
+                }
+            }
+            return true;
         } catch (Exception e) {
+            return false;
         }
-
     }
 
     public boolean updateGlider(@Valid Integer ID, Glider updatedGlider) {
@@ -47,7 +52,7 @@ public class GliderService {
                     existingGlider.setName(updatedGlider.getName());
                 }
 
-                if (updatedGlider.getNumWings() != 0) {
+                if (updatedGlider.getNumWings() != null) {
                     existingGlider.setNumWings(updatedGlider.getNumWings());
                 }
 
